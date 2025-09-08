@@ -1,0 +1,123 @@
+SQL> select * from emp_details where adharno is null;
+
+no rows selected
+
+SQL> select * from salary_detail where department_id <> 10;
+
+no rows selected
+
+SQL> select * from salary_detail where comm > salary;
+select * from salary_detail where comm > salary
+                                  *
+ERROR at line 1:
+ORA-00904: "COMM": invalid identifier 
+
+
+SQL> select * from salary_detail where commission > salary;
+
+no rows selected
+
+SQL> select distinct department_id from salary_details;
+
+DEPARTMENT_ID                                                                                                                                                                                           
+-------------                                                                                                                                                                                           
+           30                                                                                                                                                                                           
+           20                                                                                                                                                                                           
+           70                                                                                                                                                                                           
+           40                                                                                                                                                                                           
+           50                                                                                                                                                                                           
+
+SQL> select * from salary_details where department_id in (20,30);
+
+     EMPID JOB_ID              SALARY COMMISSION DEPARTMENT_ID                                                                                                                                          
+---------- --------------- ---------- ---------- -------------                                                                                                                                          
+       101 IT                   22000         .2            20                                                                                                                                          
+       102 IT                   30000                       30                                                                                                                                          
+
+SQL> select * from salary_details where salary in (25000,30000,40000);
+
+     EMPID JOB_ID              SALARY COMMISSION DEPARTMENT_ID                                                                                                                                          
+---------- --------------- ---------- ---------- -------------                                                                                                                                          
+       102 IT                   30000                       30                                                                                                                                          
+
+SQL> 
+SQL> select * from emp_details where first_name like 'Sh%';
+
+no rows selected
+
+SQL> select * from emp_details where first_name like '%Sh%';
+
+no rows selected
+
+SQL> select count(*) from emp_details;
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         5                                                                                                                                                                                              
+
+SQL> select max(salary) from salary_details;
+
+MAX(SALARY)                                                                                                                                                                                             
+-----------                                                                                                                                                                                             
+      30000                                                                                                                                                                                             
+
+SQL> select avg(salary) from salary_details;
+
+AVG(SALARY)                                                                                                                                                                                             
+-----------                                                                                                                                                                                             
+      20800                                                                                                                                                                                             
+
+SQL> select sum(salary) from salary_details;
+
+SUM(SALARY)                                                                                                                                                                                             
+-----------                                                                                                                                                                                             
+     104000                                                                                                                                                                                             
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select count(*) from salary_details
+  2*  where commission is null
+SQL> /
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         1                                                                                                                                                                                              
+
+SQL> select department_id,sum(salary) from salary_details group by department_id;
+
+DEPARTMENT_ID SUM(SALARY)                                                                                                                                                                               
+------------- -----------                                                                                                                                                                               
+           30       30000                                                                                                                                                                               
+           20       22000                                                                                                                                                                               
+           70       28000                                                                                                                                                                               
+           40       12000                                                                                                                                                                               
+           50       12000                                                                                                                                                                               
+
+SQL>  select department_id,count(*) from salary_details group by department_id;
+
+DEPARTMENT_ID   COUNT(*)                                                                                                                                                                                
+------------- ----------                                                                                                                                                                                
+           30          1                                                                                                                                                                                
+           20          1                                                                                                                                                                                
+           70          1                                                                                                                                                                                
+           40          1                                                                                                                                                                                
+           50          1                                                                                                                                                                                
+
+SQL> select department_id,sum(salary) from salary_details group by department_id having avg(salary)>100000;
+
+no rows selected
+
+SQL> select department_id,sum(salary) from salary_details group by department_id having sum(salary)>100000;
+
+no rows selected
+
+SQL>  select department_id,avg(salary) from salary_details group by department_id having avg(salary)>50000;
+
+no rows selected
+
+SQL> commit;
+
+Commit complete.
+
+SQL> spool off
